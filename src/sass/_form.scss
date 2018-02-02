@@ -62,7 +62,9 @@
 
 	.select {
 		height: 20px;
-		margin-right: 5px;
+		&:not(:last-child) {
+			margin-right: 5px;
+		}
 		border-radius: 4px;
 		border: 1px solid $select_border_col;
 		@include grayGradient

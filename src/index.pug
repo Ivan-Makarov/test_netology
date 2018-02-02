@@ -12,8 +12,8 @@ html(lang="ru")
 	
 	body.body
 		.content
-			h1.main-heading Заявка на экскурсионный полет на Марс
-		.content.container-flex
+			h1.main-heading Заявка на&nbsp;экскурсионный полет на&nbsp;Марс
+		.content.container-flex.page-content
 			main.main
 				form.form.js-form
 					.form__info-section
@@ -21,7 +21,7 @@ html(lang="ru")
 							label.label.label_form-row(for="surname") Фамилия
 							input.input.input_typein(id="surname" name="surname" type="text")
 							
-						.form__row.nolabel.container-flex
+						.form__row.nolabel.checkbox-row
 							input(type="hidden" name="has-changed-surname" value="нет")
 							input.checkbox(id="has-changed-surname" name="has-changed-surname" type="checkbox" value="да")
 							label.label(for="has-changed-surname") ранее менялась	
@@ -99,13 +99,13 @@ html(lang="ru")
 							input.input.input_typein(type="email" name="email" id="email" data-valid="false")
 							
 					.form__submit-section
-						.form__row.nolabel.container-flex
+						.form__row.nolabel.checkbox-row
 							input.checkbox(type="checkbox" id="agrees" name="agrees")
 							label.label(for="agrees" required) Ставя эту галочку, я подтверждаю, что поставил ее в здравом уме и твердой памяти. 
 						
-						.form__row.nolabel
+						.form__row.nolabel.button-row
 							button.button.button_submit.js-submit-form(type="submit" disabled="true")
-								span Полететь на Марс
+								span Полететь на&nbsp;Марс
 
 			aside.aside
 				h3.aside__heading Почему стабильно солнечное затмение?
