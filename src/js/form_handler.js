@@ -30,7 +30,8 @@ export default () => {
 			method: "GET",
 			dataType: "json",
 			data: helpers.objectifyFormData(form),
-			success: console.log('yay')
+			success: () => {informUserUponSubmission()},
+			error: () => {informUserUponSubmission(false)}
 		});
 	}
 
@@ -334,7 +335,6 @@ export default () => {
 		const noticeText = notice.querySelector('p');
 		field.classList.add('attention');
 		notice.classList.remove('hidden');
-		console.log(data.notices, msg);
 		noticeText.textContent = data.notices[msg];
 	}
 
@@ -344,6 +344,14 @@ export default () => {
 		field.classList.remove('attention');
 		notice.classList.add('hidden');
 	}
+
+	function informUserUponSubmission(success = true) {
+		const formdata = JSON.parse(localStorage.data);
+		const name = formdata.name;
+		const patronym = formdata.patronym
+		document.querySelector('.page-content').classList.add('hidden');
+		document.querySelector('.main-heading').textContent = success ? `Спасибо, ${name}${patronym ? ' ' + patronym : ''}. Ваша заявка принята.` : `Извините, ${name}${patronym ? ' ' + patronym : ''}, что-то пошло не так. Попробуйте еще раз.` 
+	}	
 
 	function touch(field) {
 		if (!field.dataset.touched) {

@@ -7,7 +7,6 @@ function objectifyFormData(form) {
 	
 	function toObject(object, [key, value]) {
 		object[key] = translate(value, data.dictionary);
-		console.log(key, value);
 		return object
 	}
 
