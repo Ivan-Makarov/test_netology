@@ -25,9 +25,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-clean-css": "^3.8.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^4.0.0",
     "gulp-minify": "^1.0.0",
     "gulp-postcss": "^7.0.0",
     "gulp-pug": "^3.3.0",
@@ -41,13 +38,12 @@
     "inputmask": "^3.3.11",
     "vinyl-buffer": "^1.0.1",
     "vinyl-ftp": "^0.6.0",
-    "vinyl-source-stream": "^2.0.0"
-  },
-  "dependencies": {
-    "cyrillic-to-translit-js": "^2.0.0",
+    "vinyl-source-stream": "^2.0.0",
     "jquery": "^3.3.1",
     "moment": "^2.20.1",
     "underscore": "^1.8.3"
+  },
+  "dependencies": {
   },
   "description": ""
 }

@@ -1,14 +1,10 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const cleanCss = require('gulp-clean-css');
-const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
-const babel = require('gulp-babel');
-const htmlmin = require('gulp-htmlmin');
 const browsersync = require('browser-sync');
-const imagemin = require('gulp-imagemin');
 const gutil = require( 'gulp-util' );
 const ftp = require( 'vinyl-ftp' );
 const replace = require('gulp-replace');
@@ -54,7 +50,7 @@ gulp.task('js', () => {
 			basename: "main",
             suffix: ".min"
         }))
-		//.pipe(uglify())
+		.pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./build/js'))
 });
@@ -78,21 +74,6 @@ gulp.task('css', () => {
         .pipe(browsersync.stream())
 });
 
-gulp.task('html', () => {
-    return gulp.src('./src/**/*.html')
-        .pipe(htmlmin({
-            collapseWhitespace: true
-        }))
-        .pipe(gulp.dest('./build'))
-        .pipe(browsersync.stream())
-});
-
-gulp.task('img', () => {
-    return gulp.src('./src/img/**/*')
-        .pipe(imagemin())
-        .pipe(gulp.dest('./build/img'))
-});
-
 gulp.task('sync', () => {
     browsersync.init({
         proxy: config.proxy,
@@ -102,16 +83,13 @@ gulp.task('sync', () => {
     })
 });
 
-gulp.task('build', ['pug', 'html', 'css', 'js', 'img']);
+gulp.task('build', ['pug', 'css', 'js']);
 
 gulp.task('watch', () => {
     gulp.watch(['./src/**/*.scss'], ['css']);
     gulp.watch(['./src/**/*.js'], ['js']);
-    gulp.watch(['./src/**/*.html'], ['html']);
 	gulp.watch(['./src/**/*.pug'], ['pug']);
-    gulp.watch(['./build/**/*.php',
-                './build/**/*.html',
-                './build/**/*.css',
+    gulp.watch(['./build/**/*.css',
 				'./build/**/*.js',
 				'./build/**/*.pug',
                 ]).on('change', browsersync.reload);
