@@ -133,7 +133,10 @@
 			color: $button_col;
 			filter: drop-shadow(0 10px 10px $button_sh_col);
 			&[disabled] {
-				color: $button_disabled_col; 
+				color: $button_disabled_col;
+				span {
+					pointer-events: none;
+				}	
 			}
 			&:active {
 				filter: initial;

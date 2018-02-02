@@ -18,13 +18,11 @@ function jsonifyFormData(form) {
 	const formData = new FormData(form);
 
 	function toObject(object, [key, value]) {
-		object[key] = translate(value, data.dictionary);
-		console.log(key, value);
+		object[key] = value;
 		return object
 	}
 
 	const dataObject = [...formData].reduce(toObject, {})
-	console.log(dataObject);
 
 	return JSON.stringify(dataObject) 
 }

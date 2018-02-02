@@ -10,9 +10,6 @@ export default () => {
 	const spreadsheet = 'https://script.google.com/macros/s/AKfycbxNRHKF3t1Xs1tt7Py8N42rqkg89v3fMfWmEDO_Hy96SLBO4th3/exec';
 	const form = document.querySelector('.js-form');
 
-	restoreUserInput(form);
-	saveUserInput(form);
-
 	form.addEventListener('submit', submitForm);
 	
 	addAutoNameTranslit(form);
@@ -21,6 +18,9 @@ export default () => {
 	addEmailAndTelValidation(form);
 	addAllFieldsValidation(form);
 	addButtonVisualHandler(form);
+
+	restoreUserInput(form);
+	saveUserInput(form);	
 
 	function submitForm(e) {
 		e.preventDefault();
@@ -152,25 +152,28 @@ export default () => {
 
 		function checkValidity(e) {
 			const input = e.target;
-			
-			if (e.type === 'blur') {
-				touch(input);
-			}
 
-			let isValid;
+			if (input === emailField || input === telField) {
+			
+				if (e.type === 'blur') {
+					touch(input);
+				}
 
-			if (input === emailField) {
-				isValid = Boolean(helpers.isValidEmail(input.value));
-			} else if (input === telField) {
-				isValid = Boolean(helpers.isValidTel(input.value));
-			}
-			
-			input.dataset.valid = isValid;
-			
-			if (!isValid) {
-				warnUser('invalidData', input)
-			} else if (input.classList.contains('invalid')) {
-				input.classList.remove('invalid')
+				let isValid;
+
+				if (input === emailField) {
+					isValid = Boolean(helpers.isValidEmail(input.value));
+				} else if (input === telField) {
+					isValid = Boolean(helpers.isValidTel(input.value));
+				}
+				
+				input.dataset.valid = isValid;
+				
+				if (!isValid) {
+					warnUser('invalidData', input)
+				} else if (input.classList.contains('invalid')) {
+					input.classList.remove('invalid')
+				}
 			}
 		} 
 	}
@@ -238,6 +241,11 @@ export default () => {
 			saveInput(form)
 		});
 
+		form.addEventListener('change', () => {
+			saveInput(form)
+		});
+		
+
 		function saveInput(form) {
 			const json = helpers.jsonifyFormData(form)
 			localStorage.setItem('data', json)
@@ -246,18 +254,53 @@ export default () => {
 
 	function restoreUserInput(form) {
 		const inputs = [...form.querySelectorAll('input, select')];
-		//const names = inputs.reduce((names, input) => {
-			//if (input.name) {
-				//names[input.name] = 
-			//}
-
-			//return names
-		//}, {})
-
+		
 		if (localStorage.data) {
 			const data = JSON.parse(localStorage.data);
-			console.log(data);
-		}	
+			restoreValues(inputs, data);
+		}
+
+		function restoreValues(inputs, data) {
+			inputs.forEach(input => {
+				const value = data[input.name];
+				
+				const changeEvent = new Event('change', {
+					'bubbles': true,
+					'cancelable': true
+				});				
+				const inputEvent = new Event('input', {
+					'bubbles': true,
+					'cancelable': true
+				});
+
+				if (value) {
+					if (input.tagName === 'SELECT') {
+						input.value = value;
+						input.dispatchEvent(changeEvent)								
+					} else {
+						
+						switch(input.type) {
+							case 'radio':
+								const label = form.querySelector(`[for=${value}]`);
+								label ? label.click() : input.click();
+								break;
+							case 'checkbox':
+								if (value == input.value) {									
+									const label = form.querySelector(`[for=${input.id}]`);
+									label ? label.click() : input.click();	
+								}
+								break;
+							case 'hidden':
+								break
+							default:
+								input.value = value;
+								input.dispatchEvent(inputEvent)
+								break
+						}						
+					}
+				}
+			})
+		}
 	}
 
 	function warnUser(problem, input) {
