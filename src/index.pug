@@ -7,7 +7,6 @@ html(lang="ru")
 		title= head.title
 		base(src=`${head.base}`)
 		link(rel="stylesheet" href="css/main.min.css")
-		//-script(src="js/jquery.min.js")
 		script(src="js/main.min.js" defer)
 	
 	body.body
@@ -65,7 +64,7 @@ html(lang="ru")
 									- for (let i = currentYear; i >= currentYear - 120; i--)
 										option(value=`${i}`)= i
 						
-						.form__row.hidden.notice-for-old.nolabel
+						.form__row.hidden.notice-for-bday.nolabel
 							p.notice.attention Вы староваты для таких полетов.
 
 						.form__row

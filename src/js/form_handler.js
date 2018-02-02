@@ -125,8 +125,11 @@ export default () => {
 				} else if (age >= 90) {
 					warnUser('tooOldToGo', bday)
 				} else if (isValid && age < 90 && bday.dataset.tooOld) {
-					removeNoticeForOldPeople(bday)
-				} 
+					removeNotice();
+					bday.removeAttribute("data-too-old");		
+				} else {
+					removeNotice()
+				}
 
 				function allDateFieldsSet() {
 					return bdayDay.value != 'null' && bdayMonth.value != 'null' && bdayYear.value != 'null'
@@ -306,13 +309,14 @@ export default () => {
 	function warnUser(problem, input) {
 		switch(problem) {
 			case 'wrongBday':
-				console.log('wrong Bday');
+				showNotice('wrongDate');
 				break;
 			case 'missingBdayPart':
-				console.log('missingBdayPart');
+				showNotice('incompleteDate');
 				break;
 			case 'tooOldToGo':
-				showNoticeForOldPeople(input)
+				showNotice('old');
+				input.setAttribute("data-too-old", "true")							
 				break;			
 			case 'invalidData':
 				if (input.dataset.touched && !input.classList.contains('invalid')) {
@@ -324,20 +328,21 @@ export default () => {
 		} 
 	}
 
-	function showNoticeForOldPeople(input) {
+	function showNotice(msg) {
 		const field = form.querySelector('.js-bday-wrapper');
-		const notice = form.querySelector('.notice-for-old')
+		const notice = form.querySelector('.notice-for-bday')
+		const noticeText = notice.querySelector('p');
 		field.classList.add('attention');
 		notice.classList.remove('hidden');
-		input.setAttribute("data-too-old", "true");
+		console.log(data.notices, msg);
+		noticeText.textContent = data.notices[msg];
 	}
 
-	function removeNoticeForOldPeople(input) {
+	function removeNotice() {
 		const field = form.querySelector('.js-bday-wrapper');
-		const notice = form.querySelector('.notice-for-old')
+		const notice = form.querySelector('.notice-for-bday')
 		field.classList.remove('attention');
 		notice.classList.add('hidden');
-		input.removeAttribute("data-too-old");
 	}
 
 	function touch(field) {
