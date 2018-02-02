@@ -1,0 +1,30 @@
+fieldset {
+	border: none
+}
+
+.content {
+	font-family: Helvetica, sans-serif;
+	width: 960px;
+	margin: 0 auto;
+}
+
+.container-flex {
+	display: flex;
+}
+
+.main {
+	width: 75%;
+	padding-right: 50px;
+	z-index: 1;
+}
+
+.aside {
+	flex: 1;
+	&__heading {
+		margin-top: 0;
+	}
+}
+
+.hidden {
+	display: none !important;
+}

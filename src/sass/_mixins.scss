@@ -1,0 +1,20 @@
+@mixin verticalGradient($color1, $color2, $bgi) {
+	@if $bgi == 'none' {
+		background: $color1;
+		background: linear-gradient(to bottom, $color1 0%, $color2 100%);		
+	} @else {
+		background: $color1;
+		background: $bgi, linear-gradient(to bottom, $color1 0%, $color2 100%);
+	}
+}
+
+@mixin grayGradient() {
+	background: $grayEF;
+	background: linear-gradient(to bottom, $off-white 0%, $grayF3 40%, $grayEF 50%, $grayE6 50%, $grayE7 100%);
+}
+
+@mixin grayGradient2() {
+	background: $grayEF;
+	background: linear-gradient(to bottom, #EDEDED 0%, #D9D9D9 55%, #DEDEDE 75%, #EAEAEA 100%);
+}
+

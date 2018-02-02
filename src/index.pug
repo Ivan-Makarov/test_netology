@@ -1,0 +1,116 @@
+doctype html
+html(lang="ru")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible" content="ie=edge")
+		title= head.title
+		base(src=`${head.base}`)
+		link(rel="stylesheet" href="css/main.min.css")
+		//-script(src="js/jquery.min.js")
+		script(src="js/main.min.js" defer)
+	
+	body.body
+		.content
+			h1.main-heading Заявка на экскурсионный полет на Марс
+		.content.container-flex
+			main.main
+				form.form.js-form
+					.form__info-section
+						.form__row.form__row_related-checkbox
+							label.label.label_form-row(for="surname") Фамилия
+							input.input.input_typein(id="surname" name="surname" type="text")
+							
+						.form__row.nolabel.container-flex
+							input(type="hidden" name="has-changed-surname" value="нет")
+							input.checkbox(id="has-changed-surname" name="has-changed-surname" type="checkbox" value="да")
+							label.label(for="has-changed-surname") ранее менялась	
+						
+						.form__row
+							label.label.label_form-row(for="name") Имя
+							input.input.input_typein(name="name" type="text" id="name")
+							
+						.form__row
+							label.label.label_form-row(for="patronym") Отчество
+							input.input.input_typein(id="patronym" name="patronym" type="text")
+
+						.nolabel
+							p.notice Если вы не хотите лететь в багажном отсеке, пожалуйста, укажите ваше отчество.
+
+						.form__row
+							label.label.label_form-row(for="surname_lat") Фамилия латиницей
+							input.input.input_typein(id="surname_lat" name="surname_lat" type="text")
+						
+						.form__row
+							label.label.label_form-row(for="name_lat") Имя латиницей
+							input.input.input_typein(id="name_lat" name="name_lat" type="text")
+						
+						.form__row
+							label.label.label_form-row(for="bday") Дата рождения
+							input(type="hidden" name="bday" id="bday" data-valid="false")
+
+							fieldset.select-wrapper.js-bday-wrapper
+								select.select(name="bday-day")
+									option(value="null") 
+									- for (let i = 1; i <= 31; i++)
+										option(value=`${i}`)= i
+								select.select(name="bday-month")
+									option(value="null")
+									each month in months
+										option(value=`${month.value}`)= month.text
+								select.select(name="bday-year")
+									option(value="null")
+									- const now = new Date();
+									- const currentYear = now.getFullYear();
+									- for (let i = currentYear; i >= currentYear - 120; i--)
+										option(value=`${i}`)= i
+						
+						.form__row.hidden.notice-for-old.nolabel
+							p.notice.attention Вы староваты для таких полетов.
+
+						.form__row
+							label.label.label_form-row Пол
+							.radiogroup.js-radiogroup
+								label(for="sex-male").button.radiogroup__button.checked мужской
+									input.hidden(id="sex-male" name="sex" type="radio" value="male" checked) 
+								label(for="sex-female").button.radiogroup__button женский
+									input.hidden(id="sex-female" name="sex" type="radio" value="female")
+
+						.form__row
+							label.label.label_form-row(for="marital-status") Семейное положение
+							select.select(id="marital-status" name="marital-status")
+								each option in maritalStatus.male
+									option(value=`${option}`) !{option}
+
+						.form__row
+							label.label.label_form-row(for="education") Образование
+							select.select(id="education" name="education")
+								each option in education
+									option(value=`${option}`) !{option}
+						
+						h2.form-section-heading.nolabel Контактная информация
+
+						.form__row
+							label.label.label_form-row(for="tel") Моб. телефон
+							input.input.input_typein(type="tel" name="tel" id="tel" placeholder="+7" data-valid="false")
+
+						.form__row
+							label.label.label_form-row(for="email") Электронная почта
+							input.input.input_typein(type="email" name="email" id="email" data-valid="false")
+							
+					.form__submit-section
+						.form__row.nolabel.container-flex
+							input.checkbox(type="checkbox" id="agrees" name="agrees")
+							label.label(for="agrees" required) Ставя эту галочку, я подтверждаю, что поставил ее в здравом уме и твердой памяти. 
+						
+						.form__row.nolabel
+							button.button.button_submit.js-submit-form(type="submit" disabled="true")
+								span Полететь на Марс
+
+			aside.aside
+				h3.aside__heading Почему стабильно солнечное затмение?
+				p.aside__text Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			
+
+
+
